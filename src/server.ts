@@ -1,14 +1,14 @@
-import { serve } from '@hono/node-server';
-import { createApp } from './app';
+import {serve} from '@hono/node-server';
+import {createApp} from './app';
 
 async function main() {
-  const app = createApp();
-  const port = Number(process.env.PORT || 4000);
-  console.log(`Listening on http://localhost:${port}`);
-  serve({ fetch: app.fetch, port });
+    const app = createApp();
+    const port = Number(process.env.PORT || 4000);
+    console.log(`Listening on http://localhost:${port}`);
+    serve({fetch: app.fetch, port});
 }
 
 main().catch((e) => {
-  console.error('Failed to start', e);
-  process.exit(1);
+    console.error('Failed to start', e);
+    process.exit(1);
 });

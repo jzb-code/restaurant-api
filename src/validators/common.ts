@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import {z} from 'zod';
 
 export const uuidSchema = z.string().uuid();
 export const idSchema = z.string().min(1);

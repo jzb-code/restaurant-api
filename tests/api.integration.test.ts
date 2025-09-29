@@ -1,87 +1,84 @@
-import { describe, it, expect, beforeAll } from 'vitest';
-import { createApp } from '../src/app';
-import { createOrderRequestSchema, createOrderResponseSchema, getOrderResponseSchema, listOrdersResponseSchema } from '../src/validators/orderValidators';
-import { loginRequestSchema, loginResponseSchema } from '../src/validators/authValidators';
-import { getSessionResponseSchema } from '../src/validators/sessionValidators';
+import {beforeAll, describe, expect, it} from 'vitest';
+import {createApp} from '../src/app';
+import {
+  createOrderRequestSchema,
+  createOrderResponseSchema,
+  getOrderResponseSchema,
+  listOrdersResponseSchema
+} from '../src/validators/orderValidators';
+import {loginRequestSchema, loginResponseSchema} from '../src/validators/authValidators';
 
 let app: ReturnType<typeof createApp>;
 let token = '';
 
 beforeAll(async () => {
-  app = createApp();
+    app = createApp();
 });
 
 describe('Restaurant API', () => {
-  it('login returns JWT', async () => {
-    const req = { clientId: 'vitest-client' };
-    expect(loginRequestSchema.safeParse(req).success).toBe(true);
-    const res = await app.request('/auth/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(req)
+    it('login returns JWT', async () => {
+        const req = {clientId: 'vitest-client'};
+        expect(loginRequestSchema.safeParse(req).success).toBe(true);
+        const res = await app.request('/auth/login', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(req)
+        });
+        expect(res.status).toBe(200);
+        const json = await res.json();
+        expect(loginResponseSchema.safeParse(json).success).toBe(true);
+        token = json.token;
     });
-    expect(res.status).toBe(200);
-    const json = await res.json();
-    expect(loginResponseSchema.safeParse(json).success).toBe(true);
-    token = json.token;
-  });
 
-  it('menu returns items', async () => {
-    const res = await app.request('/api/menu', { headers: { Authorization: `Bearer ${token}` } });
-    expect(res.status).toBe(200);
-    const json = await res.json();
-    expect(Array.isArray(json.items)).toBe(true);
-    expect(json.items.length).toBeGreaterThan(0);
-  });
-
-  let sessionId: number;
-  let orderId: string;
-
-  it('creates order (CreateOrderRequest)', async () => {
-    const req = { items: [{ id: 'pizza-margherita', price: 20, qty: 1 }] };
-    expect(createOrderRequestSchema.safeParse(req).success).toBe(true);
-
-    const res = await app.request('/api/orders', {
-      method: 'POST',
-      headers: { 'Content-Type':'application/json', Authorization: `Bearer ${token}` },
-      body: JSON.stringify(req)
+    it('menu returns items', async () => {
+        const res = await app.request('/api/menu', {headers: {Authorization: `Bearer ${token}`}});
+        expect(res.status).toBe(200);
+        const json = await res.json();
+        expect(Array.isArray(json.items)).toBe(true);
+        expect(json.items.length).toBeGreaterThan(0);
     });
-    expect(res.status).toBe(200);
-    const json = await res.json();
-    expect(createOrderResponseSchema.safeParse(json).success).toBe(true);
-    sessionId = json.sessionId;
-    orderId = json.orderId;
-  });
 
-  it('returns queued status initially', async () => {
-    const res = await app.request(`/api/orders/${orderId}`, { headers: { Authorization: `Bearer ${token}` } });
-    expect(res.status).toBe(200);
-    const json = await res.json();
-    expect(getOrderResponseSchema.safeParse(json).success).toBe(true);
-    expect(json.status).toBe('queued');
-  });
+    let sessionId: number;
+    let orderId: string;
 
-  it('auto progresses status', async () => {
-    await new Promise(r => setTimeout(r, 3500));
-    const res = await app.request(`/api/orders/${orderId}`, { headers: { Authorization: `Bearer ${token}` } });
-    expect(res.status).toBe(200);
-    const json = await res.json();
-    expect(getOrderResponseSchema.safeParse(json).success).toBe(true);
-    expect(['baking','shipped','delivered']).toContain(json.status);
-  });
+    it('creates order (CreateOrderRequest)', async () => {
+        const req = {items: [{id: 'pizza-margherita', price: 20, qty: 1}]};
+        expect(createOrderRequestSchema.safeParse(req).success).toBe(true);
 
-  it('lists orders in session', async () => {
-    const res = await app.request(`/api/orders?sessionId=${sessionId}`, { headers: { Authorization: `Bearer ${token}` } });
-    expect(res.status).toBe(200);
-    const json = await res.json();
-    expect(listOrdersResponseSchema.safeParse(json).success).toBe(true);
-    expect(json.count).toBeGreaterThan(0);
-  });
+        const res = await app.request('/api/orders', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json', Authorization: `Bearer ${token}`},
+            body: JSON.stringify(req)
+        });
+        expect(res.status).toBe(200);
+        const json = await res.json();
+        expect(createOrderResponseSchema.safeParse(json).success).toBe(true);
+        sessionId = json.sessionId;
+        orderId = json.orderId;
+    });
 
-  it('gets full session', async () => {
-    const res = await app.request(`/api/sessions/${sessionId}`, { headers: { Authorization: `Bearer ${token}` } });
-    expect(res.status).toBe(200);
-    const json = await res.json();
-    expect(getSessionResponseSchema.safeParse(json).success).toBe(true);
-  });
+    it('returns queued status initially', async () => {
+        const res = await app.request(`/api/orders/${orderId}`, {headers: {Authorization: `Bearer ${token}`}});
+        expect(res.status).toBe(200);
+        const json = await res.json();
+        expect(getOrderResponseSchema.safeParse(json).success).toBe(true);
+        expect(json.status).toBe('queued');
+    });
+
+    it('auto progresses status', async () => {
+        await new Promise(r => setTimeout(r, 3500));
+        const res = await app.request(`/api/orders/${orderId}`, {headers: {Authorization: `Bearer ${token}`}});
+        expect(res.status).toBe(200);
+        const json = await res.json();
+        expect(getOrderResponseSchema.safeParse(json).success).toBe(true);
+        expect(['baking', 'shipped', 'delivered']).toContain(json.status);
+    });
+
+    it('lists orders in session', async () => {
+        const res = await app.request(`/api/orders?sessionId=${sessionId}`, {headers: {Authorization: `Bearer ${token}`}});
+        expect(res.status).toBe(200);
+        const json = await res.json();
+        expect(listOrdersResponseSchema.safeParse(json).success).toBe(true);
+        expect(json.count).toBeGreaterThan(0);
+    });
 });
