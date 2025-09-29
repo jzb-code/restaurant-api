@@ -1,8 +1,8 @@
 import {Hono} from "hono";
-import {authMiddleware, issueToken} from "./auth";
-import {MENU} from "./menu";
-import {orderRoutes} from "./routes/orderRoutes";
-import {loginRequestSchema, loginResponseSchema} from "./validators/authValidators";
+import {authMiddleware, issueToken} from "./auth.js";
+import {MENU} from "./menu.js";
+import {orderRoutes} from "./routes/orderRoutes.js";
+import {loginRequestSchema, loginResponseSchema} from "./validators/authValidators.js";
 
 export function createApp() {
     const app = new Hono();

@@ -5,7 +5,7 @@ import type {
     ListOrdersResponse,
     LoginResponse,
     MenuResponse
-} from "./types";
+} from "./types.js";
 
 export class RestaurantClient {
     private baseUrl: string;

@@ -1,6 +1,6 @@
-import {addOrder, createSession, getOrderById, getSession, listOrders} from "../store";
-import {statusService} from "./statusService";
-import type {CreateOrderRequest, CreateOrderResponse} from "../types";
+import {addOrder, createSession, getOrderById, getSession, listOrders} from "../store.js";
+import {statusService} from "./statusService.js";
+import type {CreateOrderRequest, CreateOrderResponse} from "../types.js";
 
 export const orderService = {
     create(data: CreateOrderRequest): CreateOrderResponse {

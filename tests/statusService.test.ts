@@ -1,6 +1,6 @@
 import {describe, expect, it} from "vitest";
-import {statusService} from "../src/services/statusService";
-import {addOrder, createSession, getOrderById} from "../src/store";
+import {statusService} from "../src/services/statusService.js";
+import {addOrder, createSession, getOrderById} from "../src/store.js";
 
 describe("statusService", () => {
     it("progresses status from queued to delivered", async () => {

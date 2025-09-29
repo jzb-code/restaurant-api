@@ -4,9 +4,9 @@ import {
   createOrderResponseSchema,
   getOrderResponseSchema,
   listOrdersResponseSchema
-} from "../validators/orderValidators";
-import {orderService} from "../services/orderService";
-import type {CreateOrderRequest} from "../types";
+} from "../validators/orderValidators.js";
+import {orderService} from "../services/orderService.js";
+import type {CreateOrderRequest} from "../types.js";
 
 export async function createOrder(c: Context) {
     const payload = (await c.req.json().catch(() => ({}))) as Partial<CreateOrderRequest>;

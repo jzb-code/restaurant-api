@@ -1,12 +1,12 @@
 import {beforeAll, describe, expect, it} from 'vitest';
-import {createApp} from '../src/app';
+import {createApp} from '../src/app.js';
 import {
   createOrderRequestSchema,
   createOrderResponseSchema,
   getOrderResponseSchema,
   listOrdersResponseSchema
-} from '../src/validators/orderValidators';
-import {loginRequestSchema, loginResponseSchema} from '../src/validators/authValidators';
+} from '../src/validators/orderValidators.js';
+import {loginRequestSchema, loginResponseSchema} from '../src/validators/authValidators.js';
 
 let app: ReturnType<typeof createApp>;
 let token = '';

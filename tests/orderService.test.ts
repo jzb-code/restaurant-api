@@ -1,6 +1,6 @@
 import {describe, expect, it} from "vitest";
-import {orderService} from "../src/services/orderService";
-import {createSession} from "../src/store";
+import {orderService} from "../src/services/orderService.js";
+import {createSession} from "../src/store.js";
 
 describe("orderService", () => {
     it("creates a new session if not provided", () => {

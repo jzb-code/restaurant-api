@@ -1,4 +1,4 @@
-import {getOrderById, updateOrderStatus} from '../store';
+import {getOrderById, updateOrderStatus} from '../store.js';
 
 const FLOW: Array<'queued' | 'baking' | 'shipped' | 'delivered'> = ['queued', 'baking', 'shipped', 'delivered'];
 

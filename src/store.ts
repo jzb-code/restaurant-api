@@ -1,4 +1,4 @@
-import type {Order, Session} from './types';
+import type {Order, Session} from './types.js';
 import {randomUUID} from "node:crypto";
 
 const sessions = new Map<number, Session>();

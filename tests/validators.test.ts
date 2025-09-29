@@ -1,6 +1,6 @@
 import {describe, expect, it} from "vitest";
-import {createOrderRequestSchema} from "../src/validators/orderValidators";
-import {loginRequestSchema} from "../src/validators/authValidators";
+import {createOrderRequestSchema} from "../src/validators/orderValidators.js";
+import {loginRequestSchema} from "../src/validators/authValidators.js";
 
 describe("Validators", () => {
     it("accepts valid login request", () => {

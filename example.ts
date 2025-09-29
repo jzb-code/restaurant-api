@@ -1,4 +1,4 @@
-import {RestaurantClient} from "./src/client";
+import {RestaurantClient} from "./src/client.js";
 
 async function demo() {
     const client = new RestaurantClient("http://localhost:4000");
