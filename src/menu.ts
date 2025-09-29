@@ -1,4 +1,4 @@
-import {MenuItem} from './types';
+import type {MenuItem} from './types';
 
 export const MENU: MenuItem[] = [
     {id: 'pizza-margherita', name: 'Pizza Margherita', description: 'Classic cheese pizza', price: 20},
