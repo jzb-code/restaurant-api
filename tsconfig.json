@@ -1,22 +1,18 @@
 {
   "compilerOptions": {
-    "rootDir": "src",
-    "outDir": "dist",
     "target": "ES2022",
     "module": "ESNext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "lib": ["ES2022", "DOM"],
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "sourceMap": true,
-    "strict": true,
-    "noUncheckedIndexedAccess": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "incremental": true,
-    "types": ["node", "vitest/globals"]
+    "rootDir": "src",
+    "outDir": "dist"
   },
-  "include": ["src"],
-  "exclude": ["node_modules", "dist", "coverage", "tests"]
+  "include": ["src", "vitest.config.ts", "eslint.config.js"]
 }
