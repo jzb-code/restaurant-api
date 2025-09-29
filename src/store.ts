@@ -1,5 +1,5 @@
 import {Order, Session} from './types';
-import {v4 as uuidv4} from 'uuid';
+import {randomUUID} from "node:crypto";
 
 const sessions = new Map<number, Session>();
 const orderIndex = new Map<string, { sessionId: number; orderIdx: number }>();
@@ -27,7 +27,7 @@ export function addOrder(sessionId: number, items: Order['items'], notes?: strin
     if (!s) throw new Error('Session not found');
     const now = Date.now();
     const order: Order = {
-        id: uuidv4(),
+        id: randomUUID(),
         items,
         status: 'queued',
         notes,

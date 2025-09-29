@@ -19,27 +19,10 @@ export interface Session {
     updatedAt: number;
 }
 
-/** Requests */
-export interface LoginRequest {
-    clientId: string;
-}
-
 export interface CreateOrderRequest {
     items: OrderItem[];
     notes?: string;
     sessionId?: number;
-}
-
-export interface ListOrdersRequest {
-    sessionId: number;
-}
-
-export interface GetOrderRequest {
-    orderId: string;
-}
-
-export interface GetSessionRequest {
-    sessionId: number;
 }
 
 /** Responses */
@@ -68,6 +51,3 @@ export interface ListOrdersResponse {
     orders: Array<{ id: string; status: OrderStatus; items: OrderItem[]; updatedAt: number }>;
 }
 
-export interface GetSessionResponse {
-    session: Session;
-}

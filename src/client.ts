@@ -1,11 +1,10 @@
 import type {
-  CreateOrderRequest,
-  CreateOrderResponse,
-  GetOrderResponse,
-  GetSessionResponse,
-  ListOrdersResponse,
-  LoginResponse,
-  MenuResponse
+    CreateOrderRequest,
+    CreateOrderResponse,
+    GetOrderResponse,
+    ListOrdersResponse,
+    LoginResponse,
+    MenuResponse
 } from "./types";
 
 export class RestaurantClient {
@@ -53,10 +52,6 @@ export class RestaurantClient {
 
     async listOrders(sessionId: number): Promise<ListOrdersResponse> {
         return this.request<ListOrdersResponse>(`/api/orders?sessionId=${sessionId}`);
-    }
-
-    async getSession(sessionId: number): Promise<GetSessionResponse> {
-        return this.request<GetSessionResponse>(`/api/sessions/${sessionId}`);
     }
 
     setToken(token: string) {
