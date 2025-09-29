@@ -1,23 +1,22 @@
-const tseslint = require('@typescript-eslint/eslint-plugin');
-const tsParser = require('@typescript-eslint/parser');
+import tseslint from "typescript-eslint";
 
-module.exports = [
+export default tseslint.config(
+  { ignores: ["dist", "node_modules"] },
   {
-    files: ['**/*.ts'],
-    ignores: ['dist/**', 'node_modules/**'],
+    files: ["**/*.ts", "**/*.tsx"],
     languageOptions: {
-      parser: tsParser,
-      parserOptions: {
-        sourceType: 'module',
-        ecmaVersion: 'latest',
-      },
+      parser: tseslint.parser,
     },
     plugins: {
-      '@typescript-eslint': tseslint,
+      "@typescript-eslint": tseslint.plugin,
     },
     rules: {
-      'no-unused-vars': 'off',
-      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+      "no-unused-vars": "off",
+      "no-undef": "off",
+      "@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
+      "@typescript-eslint/explicit-function-return-type": "off",
+      "@typescript-eslint/no-explicit-any": "warn",
+      "@typescript-eslint/consistent-type-imports": "error",
     },
-  },
-];
+  }
+);
