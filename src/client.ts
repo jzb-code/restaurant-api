@@ -7,7 +7,7 @@ import type {
 } from "./types.js";
 
 export class RestaurantClient {
-  private baseUrl: string;
+  private readonly baseUrl: string;
   private TOKEN: string = "dev-secret-change-me";
 
   constructor(baseUrl: string) {

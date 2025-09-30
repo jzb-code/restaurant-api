@@ -14,5 +14,6 @@
     "rootDir": "src",
     "outDir": "dist"
   },
-  "include": ["src", "vitest.config.ts", "eslint.config.js"]
+  "include": ["src", "vitest.config.ts", "eslint.config.js"],
+  "exclude": ["dist", "node_modules"]
 }

@@ -11,6 +11,7 @@ let app;
 let token = "dev-secret-change-me";
 beforeAll(async () => {
   app = createApp();
+  process.env.AUTO_PROGRESS_TIMEOUT = "100";
 });
 describe("Restaurant API", () => {
   it("api returns unauthorized on invalid token", async () => {

@@ -10,9 +10,9 @@ const FLOW: Array<"queued" | "baking" | "shipped" | "delivered"> = [
 class StatusService {
   private timers = new Map<string, NodeJS.Timeout>();
 
-  start(orderId: string, delayMs = 15000) {
+  start(orderId: string) {
     if (this.timers.has(orderId)) return;
-    this.scheduleNext(orderId, delayMs);
+    this.scheduleNext(orderId, parseInt(process.env.AUTO_PROGRESS_TIMEOUT || "5000"));
   }
 
   private scheduleNext(orderId: string, delayMs: number) {
