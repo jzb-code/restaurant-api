@@ -10,7 +10,7 @@ const FLOW: Array<"queued" | "baking" | "shipped" | "delivered"> = [
 class StatusService {
   private timers = new Map<string, NodeJS.Timeout>();
 
-  start(orderId: string, delayMs = 3000) {
+  start(orderId: string, delayMs = 15000) {
     if (this.timers.has(orderId)) return;
     this.scheduleNext(orderId, delayMs);
   }
@@ -31,7 +31,7 @@ class StatusService {
     const t = setTimeout(() => {
       try {
         updateOrderStatus(orderId, next);
-        this.timers.delete(orderId); // allow next schedule to set new timeout
+        this.timers.delete(orderId);
         this.scheduleNext(orderId, delayMs);
       } catch {
         this.clear(orderId);

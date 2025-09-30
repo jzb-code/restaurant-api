@@ -15,7 +15,6 @@ export async function createOrder(c: Context) {
     return c.json({ error: "Invalid payload", details: parsed.error.flatten() }, 400);
   }
   const result = orderService.create(parsed.data);
-  // optional response validation in dev
   const check = createOrderResponseSchema.safeParse(result);
   if (!check.success) return c.json({ error: "Internal response invalid" }, 500);
   return c.json(result);

@@ -2,7 +2,7 @@
 
 - controllers / services / routes / validators
 - JWT auth
-- Auto status progression: queued → baking → shipped → delivered (every 3s)
+- Auto status progression: queued → baking → shipped → delivered (every 15s)
 - Vitest integration tests (validate requests & responses with Zod)
 
 ## Run
