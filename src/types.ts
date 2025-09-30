@@ -25,11 +25,6 @@ export interface CreateOrderRequest {
   sessionId?: number;
 }
 
-/** Responses */
-export interface LoginResponse {
-  token: string;
-}
-
 export interface MenuResponse {
   items: MenuItem[];
 }

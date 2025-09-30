@@ -3,13 +3,12 @@ import type {
   CreateOrderResponse,
   GetOrderResponse,
   ListOrdersResponse,
-  LoginResponse,
   MenuResponse,
 } from "./types.js";
 
 export class RestaurantClient {
   private baseUrl: string;
-  private token: string | null = null;
+  private TOKEN: string = "dev-secret-change-me";
 
   constructor(baseUrl: string) {
     this.baseUrl = baseUrl.replace(/\/$/, "");
@@ -18,7 +17,7 @@ export class RestaurantClient {
   private async request<T>(path: string, options: RequestInit = {}): Promise<T> {
     const headers: HeadersInit = {
       "Content-Type": "application/json",
-      ...(this.token ? { Authorization: `Bearer ${this.token}` } : {}),
+      ...(this.TOKEN ? { Authorization: `Bearer ${this.TOKEN}` } : {}),
       ...options.headers,
     };
     const res = await fetch(`${this.baseUrl}${path}`, { ...options, headers });
@@ -26,13 +25,6 @@ export class RestaurantClient {
       throw new Error(`HTTP ${res.status}: ${await res.text()}`);
     }
     return res.json() as Promise<T>;
-  }
-
-  async login(clientId: string): Promise<LoginResponse> {
-    return this.request<LoginResponse>("/auth/login", {
-      method: "POST",
-      body: JSON.stringify({ clientId }),
-    });
   }
 
   async getMenu(): Promise<MenuResponse> {
@@ -55,6 +47,6 @@ export class RestaurantClient {
   }
 
   setToken(token: string) {
-    this.token = token;
+    this.TOKEN = token;
   }
 }

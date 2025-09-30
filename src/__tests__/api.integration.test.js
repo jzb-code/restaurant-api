@@ -6,26 +6,20 @@ import {
   getOrderResponseSchema,
   listOrdersResponseSchema,
 } from "../validators/orderValidators.ts";
-import { loginRequestSchema, loginResponseSchema } from "../validators/authValidators.ts";
+
 let app;
-let token = "";
+let token = "dev-secret-change-me";
 beforeAll(async () => {
   app = createApp();
 });
 describe("Restaurant API", () => {
-  it("login returns JWT", async () => {
-    const req = { clientId: "vitest-client" };
-    expect(loginRequestSchema.safeParse(req).success).toBe(true);
-    const res = await app.request("/auth/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(req),
+  it("api returns unauthorized on invalid token", async () => {
+    const res = await app.request("/api/menu", {
+      headers: { Authorization: `Bearer invalid-token` },
     });
-    expect(res.status).toBe(200);
-    const json = await res.json();
-    expect(loginResponseSchema.safeParse(json).success).toBe(true);
-    token = json.token;
+    expect(res.status).toBe(401);
   });
+
   it("menu returns items", async () => {
     const res = await app.request("/api/menu", { headers: { Authorization: `Bearer ${token}` } });
     expect(res.status).toBe(200);
@@ -33,6 +27,7 @@ describe("Restaurant API", () => {
     expect(Array.isArray(json.items)).toBe(true);
     expect(json.items.length).toBeGreaterThan(0);
   });
+
   let sessionId;
   let orderId;
   it("creates order (CreateOrderRequest)", async () => {

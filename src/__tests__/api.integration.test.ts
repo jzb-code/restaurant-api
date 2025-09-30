@@ -6,30 +6,15 @@ import {
   getOrderResponseSchema,
   listOrdersResponseSchema,
 } from "../validators/orderValidators.js";
-import { loginRequestSchema, loginResponseSchema } from "../validators/authValidators.js";
 
 let app: ReturnType<typeof createApp>;
-let token = "";
+let token = "dev-secret-change-me";
 
 beforeAll(async () => {
   app = createApp();
 });
 
 describe("Restaurant API", () => {
-  it("login returns JWT", async () => {
-    const req = { clientId: "vitest-client" };
-    expect(loginRequestSchema.safeParse(req).success).toBe(true);
-    const res = await app.request("/auth/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(req),
-    });
-    expect(res.status).toBe(200);
-    const json = await res.json();
-    expect(loginResponseSchema.safeParse(json).success).toBe(true);
-    token = json.token;
-  });
-
   it("menu returns items", async () => {
     const res = await app.request("/api/menu", { headers: { Authorization: `Bearer ${token}` } });
     expect(res.status).toBe(200);

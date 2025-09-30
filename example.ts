@@ -3,10 +3,6 @@ import { RestaurantClient } from "./src/client.js";
 async function demo() {
   const client = new RestaurantClient("http://localhost:4000");
 
-  const { token } = await client.login("my-gpt-client");
-  client.setToken(token);
-  console.log("Token:", token);
-
   const menu = await client.getMenu();
   console.log("Menu:", menu.items);
 
