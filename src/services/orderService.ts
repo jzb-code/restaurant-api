@@ -9,7 +9,7 @@ export const orderService = {
       sessionId = createSession().id;
     }
     const order = addOrder(sessionId, data.items, data.notes);
-    statusService.start(order.id, 3000);
+    statusService.start(order.id);
     return { sessionId, orderId: order.id };
   },
 
