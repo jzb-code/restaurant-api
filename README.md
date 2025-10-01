@@ -1,7 +1,7 @@
-# Restaurant API (Hono + Zod, structured)
+# Restaurant API
 
 - controllers / services / routes / validators
-- JWT auth
+- Bearer API-Key auth
 - Auto status progression: queued → baking → shipped → delivered (every 15s)
 - Vitest integration tests (validate requests & responses with Zod)
 
